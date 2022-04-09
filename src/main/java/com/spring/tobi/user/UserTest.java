@@ -4,12 +4,18 @@ import com.spring.tobi.user.dao.H2UserDao;
 import com.spring.tobi.user.dao.MariaUserDao;
 import com.spring.tobi.user.dao.UserDao;
 import com.spring.tobi.user.domain.User;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 
+@Component
+@RequiredArgsConstructor
 public class UserTest {
-    public static void main(String[] args) throws SQLException, ClassNotFoundException {
-        UserDao userDao = new H2UserDao();
+
+    private final UserDao userDao;
+
+    public void test() throws SQLException, ClassNotFoundException {
 
         User user = new User();
         user.setId("seon");
@@ -26,4 +32,5 @@ public class UserTest {
 
         System.out.println(user1.getId() + "조회 성공");
     }
+
 }
