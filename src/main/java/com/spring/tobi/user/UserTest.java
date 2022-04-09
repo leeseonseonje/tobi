@@ -1,19 +1,21 @@
 package com.spring.tobi.user;
 
-import com.spring.tobi.user.dao.H2UserDao;
-import com.spring.tobi.user.dao.MariaUserDao;
 import com.spring.tobi.user.dao.UserDao;
 import com.spring.tobi.user.domain.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 
 @Component
-@RequiredArgsConstructor
 public class UserTest {
 
     private final UserDao userDao;
+
+    public UserTest(@Qualifier("h2") UserDao userDao) {
+        this.userDao = userDao;
+    }
 
     public void test() throws SQLException, ClassNotFoundException {
 

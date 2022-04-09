@@ -1,9 +1,14 @@
 package com.spring.tobi.user.dao;
 
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+@Component
+@Primary
 public class MariaUserDao extends UserDao {
 
     @Override
