@@ -2,7 +2,6 @@ package com.spring.tobi.user;
 
 import com.spring.tobi.user.dao.UserDao;
 import com.spring.tobi.user.domain.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
