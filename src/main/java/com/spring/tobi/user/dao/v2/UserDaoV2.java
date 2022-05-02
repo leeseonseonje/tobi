@@ -1,14 +1,22 @@
-package com.spring.tobi.user.dao;
+package com.spring.tobi.user.dao.v2;
 
 import com.spring.tobi.user.domain.User;
+import org.springframework.stereotype.Component;
 
 import java.sql.*;
 
-public abstract class UserDao {
+@Component
+public class UserDaoV2 {
+
+    private SimpleConnectionMaker connectionMaker;
+
+    public UserDaoV2(SimpleConnectionMaker connectionMaker) {
+        this.connectionMaker = connectionMaker;
+    }
 
     public void add(User user) throws ClassNotFoundException, SQLException {
 
-        Connection c = getConnection();
+        Connection c = connectionMaker.makeNewConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "insert into users(id, name, password) values(?, ?, ?)");
@@ -25,7 +33,7 @@ public abstract class UserDao {
 
     public User get(String id) throws ClassNotFoundException, SQLException {
 
-        Connection c = getConnection();
+        Connection c = connectionMaker.makeNewConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "select * from users where id = ?");
@@ -45,5 +53,15 @@ public abstract class UserDao {
         return user;
     }
 
-    public abstract Connection getConnection() throws SQLException, ClassNotFoundException;
+    public void delete() throws SQLException, ClassNotFoundException {
+        Connection c = connectionMaker.makeNewConnection();
+
+        PreparedStatement ps = c.prepareStatement(
+                "delete from users");
+
+        ps.executeUpdate();
+
+        ps.close();
+        c.close();
+    }
 }

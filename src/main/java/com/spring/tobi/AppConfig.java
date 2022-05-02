@@ -1,6 +1,6 @@
 //package com.spring.tobi;
 //
-//import com.spring.tobi.user.dao.MariaUserDao;
+//import com.spring.tobi.user.dao.v1.MariaUserDao;
 //import com.spring.tobi.user.dao.UserDao;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
