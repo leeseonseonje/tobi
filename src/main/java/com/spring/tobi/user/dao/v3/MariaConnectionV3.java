@@ -8,7 +8,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MariaConnection implements ConnectionMaker {
+public class MariaConnectionV3 implements ConnectionMaker {
 
     @Override
     public Connection makeConnection() throws SQLException, ClassNotFoundException {

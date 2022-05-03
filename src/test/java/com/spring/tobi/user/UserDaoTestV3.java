@@ -1,7 +1,7 @@
 package com.spring.tobi.user;
 
 import com.spring.tobi.user.dao.v3.ConnectionMaker;
-import com.spring.tobi.user.dao.v3.MariaConnection;
+import com.spring.tobi.user.dao.v3.MariaConnectionV3;
 import com.spring.tobi.user.dao.v3.UserDaoV3;
 import com.spring.tobi.user.dao.v3.UserTestV3;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,7 +15,7 @@ public class UserDaoTestV3 {
 
     @BeforeEach
     void init() throws SQLException, ClassNotFoundException {
-        ConnectionMaker maker = new MariaConnection();
+        ConnectionMaker maker = new MariaConnectionV3();
         UserDaoV3 userDao = new UserDaoV3(maker);
         userTest = new UserTestV3(userDao);
         userTest.delete();
