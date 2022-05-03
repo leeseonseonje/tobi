@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Component
 public class UserDaoV3 {
 
     private final ConnectionMaker connectionMaker;

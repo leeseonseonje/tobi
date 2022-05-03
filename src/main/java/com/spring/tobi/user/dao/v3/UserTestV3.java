@@ -6,7 +6,6 @@ import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
 
-@Component
 public class UserTestV3 {
 
     private UserDaoV3 userDao;

@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-@Component
-@Qualifier("h2")
 public class H2Connection implements ConnectionMaker {
 
     @Override
