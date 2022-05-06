@@ -1,24 +1,43 @@
 package com.spring.tobi.user;
 
 import com.spring.tobi.user.dao.v4.DaoFactoryV4;
-import com.spring.tobi.user.dao.v4.UserTestV4;
+import com.spring.tobi.user.dao.v4.UserDaoV4;
+import com.spring.tobi.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
 
+@SpringBootTest
 public class UserDaoTestV4 {
 
-    UserTestV4 userTest;
+    UserDaoV4 userDao;
 
     @BeforeEach
     void init() throws SQLException, ClassNotFoundException {
-        userTest = new UserTestV4(new DaoFactoryV4().userDao());
-        userTest.delete();
+        AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(DaoFactoryV4.class);
+        userDao = context.getBean("userDao", UserDaoV4.class);
+        this.userDao.delete();
     }
 
     @Test
     void test() throws SQLException, ClassNotFoundException {
-        userTest.test();
+        User user = new User();
+        user.setId("seon");
+        user.setName("이선제");
+        user.setPassword("seon123");
+
+        userDao.add(user);
+
+        System.out.println(user.getId() + "등록 성공");
+
+        User user1 = userDao.get(user.getId());
+        System.out.println(user1.getName());
+        System.out.println(user1.getPassword());
+
+        System.out.println(user1.getId() + "조회 성공");
     }
 }
