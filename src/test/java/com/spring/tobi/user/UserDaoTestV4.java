@@ -1,38 +1,39 @@
 package com.spring.tobi.user;
 
+import com.spring.tobi.user.dao.v4.CountingDaoFactoryV4;
 import com.spring.tobi.user.dao.v4.DaoFactoryV4;
 import com.spring.tobi.user.dao.v4.UserDaoV4;
 import com.spring.tobi.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.sql.SQLException;
 
+import static org.assertj.core.api.Assertions.*;
+
 @Slf4j
 @SpringBootTest
 public class UserDaoTestV4 {
 
-    UserDaoV4 userDaoMaria;
-    UserDaoV4 userDaoH2;
+    ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactoryV4.class);
+    ApplicationContext countingContext = new AnnotationConfigApplicationContext(CountingDaoFactoryV4.class);
 
-    @BeforeEach
-    void init() throws SQLException, ClassNotFoundException {
-        ApplicationContext context = new AnnotationConfigApplicationContext(DaoFactoryV4.class);
-        userDaoMaria = context.getBean("userDaoMaria", UserDaoV4.class);
+    @Test
+    void mariaDbTest() throws SQLException, ClassNotFoundException {
+        UserDaoV4 userDaoMaria = context.getBean("userDaoMaria", UserDaoV4.class);
         userDaoMaria.delete();
-
-        userDaoH2 = context.getBean("userDaoH2", UserDaoV4.class);
-        userDaoH2.delete();
+        crud(userDaoMaria);
     }
 
     @Test
-    void test() throws SQLException, ClassNotFoundException {
-        crud(userDaoMaria);
+    void h2DbTest() throws SQLException, ClassNotFoundException {
+        UserDaoV4 userDaoH2 = countingContext.getBean("userDaoH2", UserDaoV4.class);
+        userDaoH2.delete();
         crud(userDaoH2);
     }
 
@@ -44,12 +45,9 @@ public class UserDaoTestV4 {
 
         userDao.add(user);
 
-        System.out.println(user.getId() + "등록 성공");
-
         User user1 = userDao.get(user.getId());
-        System.out.println(user1.getName());
-        System.out.println(user1.getPassword());
 
-        System.out.println(user1.getId() + "조회 성공");
+        assertThat(user1.getId()).isEqualTo(user.getId());
+        assertThat(user1.getName()).isEqualTo(user.getName());
     }
 }

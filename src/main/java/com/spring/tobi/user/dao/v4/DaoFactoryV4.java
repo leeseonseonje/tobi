@@ -16,14 +16,4 @@ public class DaoFactoryV4 {
     public ConnectionMaker connectionMaria() {
         return new MariaConnectionV4();
     }
-
-    @Bean
-    public UserDaoV4 userDaoH2() {
-        return new UserDaoV4((connectionH2()));
-    }
-
-    @Bean
-    public ConnectionMaker connectionH2() {
-        return new H2ConnectionV4();
-    }
 }

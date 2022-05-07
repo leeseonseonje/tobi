@@ -1,10 +1,8 @@
 package com.spring.tobi.container;
 
 import com.spring.tobi.user.dao.v4.DaoFactoryV4;
-import com.spring.tobi.user.dao.v4.MariaConnectionV4;
 import com.spring.tobi.user.dao.v4.UserDaoV4;
 import lombok.extern.slf4j.Slf4j;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
