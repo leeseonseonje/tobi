@@ -1,6 +1,6 @@
 package com.spring.tobi.chapter2test;
 
-import com.spring.tobi.user.dao.v5.DaoFactoryV5;
+import com.spring.tobi.user.dao.v5.H2FactoryV5;
 import com.spring.tobi.user.dao.v5.UserDaoV5;
 import com.spring.tobi.user.domain.User;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ public class UserDaoTest {
 
     @Test
     void addAndGet() throws SQLException, ClassNotFoundException {
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(DaoFactoryV5.class);
+        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(H2FactoryV5.class);
 
         UserDaoV5 userDao = applicationContext.getBean("userDaoH2DataSource", UserDaoV5.class);
 
