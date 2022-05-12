@@ -3,7 +3,6 @@ package com.spring.tobi.chapter2test;
 import com.spring.tobi.user.dao.v5.DaoFactoryV5;
 import com.spring.tobi.user.dao.v5.UserDaoV5;
 import com.spring.tobi.user.domain.User;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
