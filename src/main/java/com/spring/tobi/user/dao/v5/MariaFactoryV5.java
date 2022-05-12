@@ -20,6 +20,7 @@ public class MariaFactoryV5 {
         dataSource.setJdbcUrl("jdbc:mariadb://localhost:3306/tobi");
         dataSource.setUsername("root");
         dataSource.setPassword("mariadb");
+        dataSource.setMaximumPoolSize(10);
         return dataSource;
     }
 }
