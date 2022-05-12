@@ -1,6 +1,7 @@
 package com.spring.tobi.user;
 
 import com.spring.tobi.user.dao.v5.H2FactoryV5;
+import com.spring.tobi.user.dao.v5.MariaFactoryV5;
 import com.spring.tobi.user.dao.v5.UserDaoV5;
 import com.spring.tobi.user.domain.User;
 import lombok.extern.slf4j.Slf4j;
@@ -17,12 +18,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 public class UserDaoTestV5 {
 
-    ApplicationContext context = new AnnotationConfigApplicationContext(H2FactoryV5.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(H2FactoryV5.class, MariaFactoryV5.class);
 
     @Test
     void h2DbTest() throws SQLException, ClassNotFoundException {
         UserDaoV5 userDaoH2 = context.getBean("userDaoH2DataSource", UserDaoV5.class);
+        UserDaoV5 userDaoMaria = context.getBean("userDaoMariaDataSource", UserDaoV5.class);
         userDaoH2.delete();
+        crud(userDaoMaria);
         crud(userDaoH2);
     }
 
