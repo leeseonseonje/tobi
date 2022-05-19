@@ -1,33 +1,35 @@
 package com.spring.tobi.chapter2test;
 
 import com.spring.tobi.user.dao.v5.H2FactoryV5;
-import com.spring.tobi.user.dao.v5.MariaFactoryV5;
+import com.spring.tobi.user.dao.v5.MysqlFactoryV5;
 import com.spring.tobi.user.dao.v5.UserDaoV5;
 import com.spring.tobi.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.test.context.ContextConfiguration;
 
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.*;
 
+@SpringBootTest
+//@ContextConfiguration(classes = {H2FactoryV5.class, MysqlFactoryV5.class})
 public class UserDaoTest {
 
-    UserDaoV5 h2UserDao;
+    @Qualifier("userDaoMysqlDao")
+    @Autowired
+    UserDaoV5 mysqlUserDao;
     User userA;
     User userB;
     User userC;
 
     @BeforeEach
     void bean() {
-        System.out.println("zzz");
-        ApplicationContext applicationContext = new AnnotationConfigApplicationContext(H2FactoryV5.class, MariaFactoryV5.class);
-        h2UserDao = applicationContext.getBean("userDaoH2DataSource", UserDaoV5.class);
-
         userA = new User("userA", "a", "a");
         userB = new User("userB", "b", "b");
         userC = new User("userC", "c", "c");
@@ -36,7 +38,7 @@ public class UserDaoTest {
 
     @Test
     void addAndGet() throws SQLException, ClassNotFoundException {
-        crud(h2UserDao);
+        crud(mysqlUserDao);
     }
 
     private void crud(UserDaoV5 userDao) throws SQLException, ClassNotFoundException {
@@ -63,8 +65,8 @@ public class UserDaoTest {
         User userB = new User("userB", "b", "b");
         User userC = new User("userC", "c", "c");
 
-        h2UserDao.delete();
-        assertThat(h2UserDao.getCount()).isEqualTo(0);
+        mysqlUserDao.delete();
+        assertThat(mysqlUserDao.getCount()).isEqualTo(0);
 
         addCountTest(userA, 1);
         addCountTest(userB, 2);
@@ -72,16 +74,16 @@ public class UserDaoTest {
     }
 
     private void addCountTest(User user, int count) throws SQLException, ClassNotFoundException {
-        h2UserDao.add(user);
-        assertThat(h2UserDao.getCount()).isEqualTo(count);
+        mysqlUserDao.add(user);
+        assertThat(mysqlUserDao.getCount()).isEqualTo(count);
     }
 
     @Test
     void getUserFailed() throws SQLException, ClassNotFoundException {
-        h2UserDao.delete();
-        assertThat(h2UserDao.getCount()).isEqualTo(0);
+        mysqlUserDao.delete();
+        assertThat(mysqlUserDao.getCount()).isEqualTo(0);
 
-        assertThatThrownBy(() -> h2UserDao.get("empty_id")).isInstanceOf(EmptyResultDataAccessException.class);
+        assertThatThrownBy(() -> mysqlUserDao.get("empty_id")).isInstanceOf(EmptyResultDataAccessException.class);
     }
 
 }

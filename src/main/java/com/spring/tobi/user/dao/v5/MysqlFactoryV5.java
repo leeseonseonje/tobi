@@ -7,19 +7,19 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class MariaFactoryV5 {
+public class MysqlFactoryV5 {
 
     @Bean
-    public UserDaoV5 userDaoMariaDataSource() {
-        return new UserDaoV5(maria());
+    public UserDaoV5 userDaoMysqlDao() {
+        return new UserDaoV5(mysql());
     }
 
     @Bean
-    public DataSource maria() {
+    public DataSource mysql() {
         HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl("jdbc:mariadb://localhost:3306/tobi");
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/tobi");
         dataSource.setUsername("root");
-        dataSource.setPassword("mariadb");
+        dataSource.setPassword("root");
         dataSource.setMaximumPoolSize(10);
         return dataSource;
     }
